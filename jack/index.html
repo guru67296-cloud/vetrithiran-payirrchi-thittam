@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy – Create Your Plan{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div>
+        <span class="eyebrow">AI FITNESS PLANNER</span>
+        <h1>Your 7-day fitness plan, personalized.</h1>
+        <p>Enter your basic profile and preferred intensity. FitBuddy will generate a structured workout plan and a practical nutrition/recovery tip.</p>
+    </div>
+</section>
+
+<section class="card">
+    <h2>Create a plan</h2>
+    <form action="/generate-workout" method="post" id="plan-form">
+        <div class="grid">
+            <label>
+                Name
+                <input name="name" required minlength="2" maxlength="120" placeholder="Your name">
+            </label>
+
+            <label>
+                User ID
+                <input name="user_id" required minlength="2" maxlength="64" placeholder="e.g. FB1001">
+            </label>
+
+            <label>
+                Age
+                <input name="age" type="number" min="13" max="100" required placeholder="25">
+            </label>
+
+            <label>
+                Weight (kg)
+                <input name="weight" type="number" min="20" max="500" step="0.1" required placeholder="70">
+            </label>
+
+            <label>
+                Fitness goal
+                <select name="goal" required>
+                    <option value="weight loss">Weight loss</option>
+                    <option value="muscle gain">Muscle gain</option>
+                    <option value="general wellness">General wellness</option>
+                    <option value="flexibility">Flexibility</option>
+                    <option value="endurance">Endurance</option>
+                </select>
+            </label>
+
+            <label>
+                Workout intensity
+                <select name="intensity" required>
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </label>
+        </div>
+
+        <button class="button primary" type="submit">Generate My 7-Day Plan</button>
+    </form>
+</section>
+
+<section class="info-grid">
+    <article class="mini-card">
+        <h3>Personalized</h3>
+        <p>Plans are tailored to your selected goal and workout intensity.</p>
+    </article>
+    <article class="mini-card">
+        <h3>Adaptive</h3>
+        <p>Submit feedback and FitBuddy can revise your plan.</p>
+    </article>
+    <article class="mini-card">
+        <h3>Practical</h3>
+        <p>Receive a concise nutrition or recovery tip with every plan.</p>
+    </article>
+</section>
+
+<p class="disclaimer">
+    General wellness information only. If you have an injury, medical condition, are pregnant,
+    or have other special circumstances, consult a qualified professional before starting a new exercise program.
+</p>
+{% endblock %}

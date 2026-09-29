@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy – Your Plan{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">YOUR PERSONAL PLAN</span>
+        <h1>Hi, {{ username }} 👋</h1>
+        <p>Your current plan is tailored to your selected goal and intensity.</p>
+    </div>
+    <a class="button secondary" href="/">Create another</a>
+</div>
+
+<section class="profile-grid">
+    <div><span>Name</span><strong>{{ username }}</strong></div>
+    <div><span>User ID</span><strong>{{ user_id }}</strong></div>
+    <div><span>Age</span><strong>{{ age }}</strong></div>
+    <div><span>Weight</span><strong>{{ weight }} kg</strong></div>
+    <div><span>Goal</span><strong>{{ goal }}</strong></div>
+    <div><span>Intensity</span><strong>{{ intensity }}</strong></div>
+</section>
+
+<section class="card">
+    <div class="section-title">
+        <h2>7-Day Workout Plan</h2>
+        {% if plan.updated_plan %}
+        <span class="badge">Updated</span>
+        {% else %}
+        <span class="badge">Original</span>
+        {% endif %}
+    </div>
+    <pre class="plan">{{ workout_plan }}</pre>
+</section>
+
+<section class="card tip-card">
+    <h2>Nutrition / Recovery Tip</h2>
+    <p>{{ nutrition_tip }}</p>
+</section>
+
+<section class="card">
+    <h2>Refine your plan</h2>
+    <p>Tell FitBuddy what you would like changed, such as more cardio, less volume, or another recovery day.</p>
+    <form action="/submit-feedback" method="post">
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <label>
+            Feedback
+            <textarea name="feedback" required minlength="3" maxlength="2000" rows="5"
+                placeholder="Example: Add more cardio and make Day 6 easier."></textarea>
+        </label>
+        <button class="button primary" type="submit">Update Plan with Feedback</button>
+    </form>
+</section>
+
+{% if plan.updated_plan %}
+<section class="card muted">
+    <h2>Original Plan</h2>
+    <pre class="plan">{{ plan.original_plan }}</pre>
+</section>
+{% endif %}
+
+<p class="disclaimer">
+    Fitness guidance is general wellness information and is not medical advice.
+</p>
+{% endblock %}

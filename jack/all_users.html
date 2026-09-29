@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}FitBuddy – Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">ADMIN / COACH VIEW</span>
+        <h1>All Users</h1>
+        <p>Review stored profiles and their original/updated plans.</p>
+    </div>
+</div>
+
+{% if not users %}
+<div class="card">
+    <h2>No users yet</h2>
+    <p>Create a plan from the home page and it will appear here.</p>
+</div>
+{% else %}
+<div class="table-wrap">
+<table>
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Profile</th>
+            <th>Goal</th>
+            <th>Intensity</th>
+            <th>Original Plan</th>
+            <th>Updated Plan</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        {% set plan = plans.get(user.user_id) %}
+        <tr>
+            <td>
+                <strong>{{ user.name }}</strong><br>
+                <small>{{ user.user_id }}</small>
+            </td>
+            <td>{{ user.age }} years<br>{{ user.weight }} kg</td>
+            <td>{{ user.goal }}</td>
+            <td>{{ user.intensity }}</td>
+            <td>
+                {% if plan %}
+                <details><summary>View</summary><pre class="compact">{{ plan.original_plan }}</pre></details>
+                {% else %}—{% endif %}
+            </td>
+            <td>
+                {% if plan and plan.updated_plan %}
+                <details><summary>View</summary><pre class="compact">{{ plan.updated_plan }}</pre></details>
+                {% else %}Not updated{% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endif %}
+{% endblock %}
